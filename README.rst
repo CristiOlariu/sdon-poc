@@ -1,3 +1,35 @@
+What is SDoN PoC
+================
+This repository contains a Proof of Concept (PoC) for our novel method of managing Overlay Networks by leveraging the SDN paradigm. As the architecture is explained in the accompanying research paper, the following steps are here to re-create our testbed.
+This repository should be cloned in the host machine. 
+
+Machines
+========
+We recommend using Linux virtual machines for this purpose. We used XEN as hypervisor and for convenience we have placed our XEN config file in sdon-poc/ryu/app/sdonManager/sdon1.cfg. This config file should be cloned for each of the other SDoN nodes, i.e. sdon node 2 to 6.
+
+Installing and configuring XEN is not the scope of this README, however we have used the information from the following link to configure our XEN VMs: https://help.ubuntu.com/community/Xen , especially focusing on the section about "Manually Create a PV Guest VM".
+
+As IP subnet, we chose 10.0.0.0/24, where 10.0.0.1 is the XEN bridge for the VMs, and the SDON nodes are at 10.0.0.101 to 10.0.0.106.
+
+After each VM is up and running, one has to install Open vSwitch (ovs) and scapy in each VM. Then copy the python script at sdon-poc/app/sdonManager/sdonManager.py from this repository in the VM's home directory. Note this script is the Signaling Module in our paper.
+
+
+Running the Ryu SDoN app
+========================
+The SDoN Controller application is at sdon-poc/app/sdon.py and should be run with:
+	% ryu-manager ryu/app/sdon.py
+from the folder where this code repository is cloned.
+
+After running this command, the SDoN Controller waits for the SDoN nodes (i.e. your VMs) to connect and start their overlay application.
+
+Go now to the console of the VMs and run on each VM the following command to start the signaling module:
+	% sudo python sdonManager.py
+and follow the on screen menu that will deliver a our PoC demo.
+
+
+
+The remainder is from the original ryu controller README file.
+
 What's Ryu
 ==========
 Ryu is a component-based software defined networking framework.
